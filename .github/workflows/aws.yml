@@ -61,6 +61,7 @@ jobs:
     
     - name: Build with Maven
       run: mvn --batch-mode --update-snapshots package
+      working-directory: ./whatshouldieat-foodservice
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
