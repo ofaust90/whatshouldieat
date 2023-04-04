@@ -12,6 +12,8 @@ import { FooditemsoverviewComponent } from './fooditemsoverview/fooditemsovervie
 import { FooditemComponent } from './fooditem/fooditem.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditfooditemComponent } from './editfooditem/editfooditem.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SuggestComponent,
     SuggestdetailviewComponent,
     FooditemsoverviewComponent,
-    FooditemComponent
+    FooditemComponent,
+    EditfooditemComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

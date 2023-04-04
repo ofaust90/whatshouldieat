@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EditfooditemComponent } from '../editfooditem/editfooditem.component';
 import { FooditemService } from '../fooditem.service';
 
 @Component({
@@ -21,5 +22,6 @@ export class FooditemsoverviewComponent implements OnInit{
    
     console.log(this.foodItems);
   
+
   }
 }
