@@ -1,0 +1,18 @@
+<div class="col">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <p class="card-text"><b>{{foodItems.name}}</b> <br>
+           <label><u>Zutaten:</u></label> <i> {{foodItems.ingredients}}</i>
+           <br>
+           <label><u>Rezept:</u></label> <i> {{foodItems.foodRecipe}}</i>
+        </p>
+           <!--<input [formControl]="foodIngredients"> -->
+           <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="editItem()">Bearbeiten</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Löschen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
