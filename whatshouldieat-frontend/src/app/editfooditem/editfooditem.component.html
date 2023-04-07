@@ -1,6 +1,6 @@
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-info px-4" data-bs-toggle="modal" data-bs-target="#loginModal">
-    Login
+    Bearbeiten
   </button>
 
   <!-- Modal -->
@@ -14,6 +14,7 @@
         <div class="modal-body">
           <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()">
             <div class="mb-3">
+                <p> hii</p>
               <label for="id_email" class="form-label">Email address</label>
              <input formControlName="email" [class.is-invalid]="emailField.touched && emailField.invalid" type="email"
                 class="form-control" id="id_email">

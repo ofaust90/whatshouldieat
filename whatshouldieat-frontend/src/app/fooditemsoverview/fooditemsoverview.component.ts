@@ -9,7 +9,7 @@ import { FooditemService } from '../fooditem.service';
 })
 export class FooditemsoverviewComponent implements OnInit{
  
-  foodItems: any = {};  //TODO antipattern
+  foodItems: any = [];  //TODO antipattern
 
 
   constructor(
@@ -21,7 +21,13 @@ export class FooditemsoverviewComponent implements OnInit{
     .subscribe(data => this.foodItems = data);
    
     console.log(this.foodItems);
+   // this.newFoodItem();
   
 
+  }
+
+  addNewFoodItem(){
+  //  newItem : any =  ;
+    this.foodItems.push({ name : "", type: "KOCHEN" });
   }
 }

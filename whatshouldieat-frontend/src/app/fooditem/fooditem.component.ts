@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -14,70 +14,29 @@ import { EditfooditemComponent } from '../editfooditem/editfooditem.component';
 })
 export class FooditemComponent implements OnInit{
 
-  @Input() foodItems: any = null;
- 
-  loginForm!: FormGroup;
-  foodRecepie: String = "";
-  foodIngredients: String = "";
- // foodIngredients = new FormControl();
- // formGroup: FormGroup;
-/*
-    constructor(private modalService: NgbModal, private formBuilder: FormBuilder) {
-      this.formGroup = formBuilder.group({});
-    }
-*/
-  
-    constructor(private modalService: NgbModal) {}
+  @Input() foodItem: any = null;
+
+  @ViewChild("modalEditDialog",{static:true}) content:ElementRef;
+
+  constructor(private modalService: NgbModal) {}
   
   ngOnInit(): void {
-      this.foodRecepie = this.foodItems.foodRecepie;
-      this.foodIngredients = this.foodItems.ingredients;
-    //   this.foodIngredients.setValue(this.foodItems.ingredients);
-    //  this.foodIngredients.disable();
- /*   this.formGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      message: ['', Validators.required]
-    });*/
-    this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required])
-    })
+  console.log("in on init " +this.foodItem +" "+this.foodItem.name);
+    // in case of a new empty item, open dialog 
+    if(this.foodItem.name == "" || undefined){
+      this.open(this.content)
     }
+  }
  
-   editItem(): void{
-     
-   }
-
-   open(content:any) {
+  open(content:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-     
+      console.log(result)
     }, (reason) => {
-     
+      console.log(reason)
     });
   } 
      
-/*
-   openModal() {
-    const modalRef = this.modalService.open(EditfooditemComponent, { size: 'md' });
-    modalRef.componentInstance.formGroup = this.formGroup;
-
-    modalRef.result.then(result => {
-      console.log('The modal was closed');
-    }).catch(reason => {
-      console.log(`The modal was dismissed with reason: ${reason}`);
-    });
-  }*/
-  get emailField(): any {
-    return this.loginForm.get('email');
-  }
-  get passwordField(): any {
-    return this.loginForm.get('password');
-  }
-
-  loginFormSubmit(): void {
-    console.log(this.loginForm.value);
-  
-    // Call Api
+  loginFormSubmit(){
+    console.log("submit triggered" + this.foodItem.name)
   }
 }

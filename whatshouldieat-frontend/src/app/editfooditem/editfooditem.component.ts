@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FoodItemModel } from '../food-item-model.model';
 
 
 @Component({
@@ -11,6 +12,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class EditfooditemComponent {
 
+  @Input() foodItem: FoodItemModel;
+
+
+
   title = 'bootstrap-popup';
   loginForm!: FormGroup;
   constructor( ) { }
@@ -19,6 +24,8 @@ export class EditfooditemComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
     })
+    console.log(this.foodItem);
+  //  this.name = this.foodItem.name;
   }
 
   get emailField(): any {
@@ -30,6 +37,7 @@ export class EditfooditemComponent {
 
   loginFormSubmit(): void {
     console.log(this.loginForm.value);
+    console.log("injected: "+this.foodItem);
   
     // Call Api
   }

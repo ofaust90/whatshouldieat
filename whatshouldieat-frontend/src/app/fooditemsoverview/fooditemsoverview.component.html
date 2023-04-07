@@ -7,7 +7,8 @@
                  <h1 class="fw-light">Übersicht</h1>
                  <p class="lead text-body-secondary">Do chasch dini Menüs verwalte und neui hinzuefüge.</p>
                  <p>
-                   <a href="#" class="btn btn-primary my-2">Neu</a>
+                    
+                   <a class="btn btn-primary my-2" (click)="addNewFoodItem()">Neu</a>
                  </p>
                </div>
              </div>
@@ -22,7 +23,7 @@
           <div class="album py-5 bg-body-tertiary">
              <div class="container">
        
-               <app-fooditem *ngFor="let foodItem of foodItems" [foodItems]="foodItem"></app-fooditem>
+               <app-fooditem *ngFor="let foodItem of foodItems" [foodItem]="foodItem"></app-fooditem>
              
            <!--   <child-component *ngFor="let childObj of childArr" [data]="childObj">
                    // your html here
