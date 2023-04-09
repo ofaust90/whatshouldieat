@@ -1,18 +1,57 @@
 <div class="col">
     <div class="card shadow-sm">
       <div class="card-body">
-        <p class="card-text"><b>{{foodItems.name}}</b> <br>
-           <label><u>Zutaten:</u></label> <i> {{foodItems.ingredients}}</i>
+        <p class="card-text"><b>{{foodItem.name}}</b> <br>
+           <label><u>Zutaten:</u></label> <i> {{foodItem.ingredients}}</i>
            <br>
-           <label><u>Rezept:</u></label> <i> {{foodItems.foodRecipe}}</i>
+           <label><u>Rezept:</u></label> <i> {{foodItem.foodRecipe}}</i>
         </p>
-           <!--<input [formControl]="foodIngredients"> -->
-           <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="editItem()">Bearbeiten</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Löschen</button>
-          </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+                 <button class="btn btn-lg btn-outline-primary" (click)="open(modalEditDialog)">Bearbeiten</button>
+            </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- Modal edit dialog -->
+  <ng-template  #modalEditDialog let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Bearbeiten</h4>
+      <button type="button" class="btn-close"  (click)="modal.dismiss('abort')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3 row">
+           <label class="form-label col-md-3">Bezeichnung:</label>
+           <input type="text" [(ngModel)]="foodItem.name" name="name" class="col-md-9">
+         </div>
+         <div class="mb-3 row">
+            <label class="form-label col-md-3">Zutaten:</label>
+            <input type="text" [(ngModel)]="foodItem.ingredients" name="foodRecipe" class="col-md-9">
+        </div>
+         <div class="mb-3 row">
+             <label class="form-label col-md-3">Rezept:</label>
+             <input type="text" [(ngModel)]="foodItem.foodRecipe" name="foodRecipe" class="col-md-9">
+         </div>  
+        <div class="mb-3 row">
+            <label class="form-label col-md-3">Typ:</label>
+            <select  [(ngModel)]="foodItem.type" name="type" class="col-md-9">
+                <option value="KOCHEN">Kochen</option>
+                <option value="TAKEOUT">Takeout</option>
+            </select>
+        </div>
+         <div class="mb-3 row">
+            <label class="form-label col-md-3">Bild:</label>
+            <input type="text" [(ngModel)]="foodItem.imageUrl" name="imageUrl" class="col-md-9">
+        </div>
+        <div class="mb-3 row">
+            <label class="form-label col-md-3">Sonstiges:</label>
+            <input type="text" [(ngModel)]="foodItem.additionalInformation" name="additionalInformation" class="col-md-9">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('delete')">Löschen</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('saved')">Speichern</button>
+    </div>
+  </ng-template>
+

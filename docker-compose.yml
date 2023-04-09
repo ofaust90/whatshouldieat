@@ -1,0 +1,12 @@
+version: "3"
+services:
+ fooditemservice:
+  image: oliverfaust/whatshouldieat-foodservice
+  ports: 
+  - 8080:8080
+
+ frontend:
+  image: whatshouldieat-frontend
+  ports:
+  - 8081:80
+

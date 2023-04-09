@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,11 +27,13 @@ public class FoodItemController {
         this.service = foodItemService;
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:8081")
     @GetMapping("/fooditem")
     public List<FoodItem> returnFoodItems(){
         return service.getAllFoodItems();
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:8081")
     @GetMapping("/fooditem/{id}")
     public FoodItem returnFoodItemById(@PathVariable("id") Integer id){
          Optional<FoodItem> opt = service.findFoodItemById(id);
@@ -41,16 +44,19 @@ public class FoodItemController {
          return null;    
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:8081")
     @PostMapping("/fooditem")
     public FoodItem addFoodItem(@RequestBody FoodItem newFoodItem) {
         return service.saveFoodItem(newFoodItem);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:8081")
     @PutMapping("/fooditem/{id}")
     public FoodItem updatFoodItem(@RequestBody FoodItem updateFoodItem, @PathVariable Integer id){
         return service.updateFoodItem(id, updateFoodItem);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:8081")
     @DeleteMapping("/fooditem/{id}")
     public void deleteFoodItem(@PathVariable Integer id){
         service.deleteFoodItem(id);
