@@ -32,6 +32,7 @@ export class FooditemsoverviewComponent implements OnInit{
 
   addNewFoodItem(){
   //  newItem : any =  ;
+  //TODO 
     this.foodItems.push({ name : "", type: "KOCHEN" });
   }
 }
