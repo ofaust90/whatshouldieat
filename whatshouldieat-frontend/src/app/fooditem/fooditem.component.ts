@@ -5,6 +5,7 @@ import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EditfooditemComponent } from '../editfooditem/editfooditem.component';
+import { FooditemService } from '../fooditem.service';
 @Component({
   selector: 'app-fooditem',
   templateUrl: './fooditem.component.html',
@@ -18,10 +19,15 @@ export class FooditemComponent implements OnInit{
 
   @ViewChild("modalEditDialog",{static:true}) content:ElementRef;
 
-  constructor(private modalService: NgbModal) {}
+  SAVED: string = "saved";
+
+  constructor(
+    private modalService: NgbModal,
+    private fooditemService : FooditemService
+    ) {}
   
   ngOnInit(): void {
-  console.log("in on init " +this.foodItem +" "+this.foodItem.name);
+ // console.log("in on init " +this.foodItem +" "+this.foodItem.name);
     // in case of a new empty item, open dialog 
     if(this.foodItem.name == "" || undefined){
       this.open(this.content)
@@ -30,13 +36,24 @@ export class FooditemComponent implements OnInit{
  
   open(content:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      console.log(result)
+      console.log("res: "+ result)
+      switch(result){
+        case "saved":
+          console.log(
+            this.fooditemService
+            .save(this.foodItem)
+            .subscribe());
+          break;
+        case "delete":
+          this.fooditemService
+          .delete(this.foodItem)
+          .subscribe();
+          break;
+        case "abort":
+        break;
+      }
     }, (reason) => {
-      console.log(reason)
+      console.log(" reason "+reason)
     });
   } 
-     
-  loginFormSubmit(){
-    console.log("submit triggered" + this.foodItem.name)
-  }
 }

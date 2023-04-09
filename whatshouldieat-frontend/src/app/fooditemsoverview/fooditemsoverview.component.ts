@@ -18,7 +18,11 @@ export class FooditemsoverviewComponent implements OnInit{
 
   ngOnInit(): void {
     this.fooditemService.loadData()
-    .subscribe(data => this.foodItems = data);
+    .subscribe(data => 
+      {
+        this.foodItems = data;
+        console.log("(overview) loaded ..." + data);
+      });
    
     console.log(this.foodItems);
    // this.newFoodItem();

@@ -1,31 +1,78 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import { FoodItemModel } from './food-item-model.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FooditemService {
 
-
-  demoFoodItems : any[] = [
-   {"id":1,"name":"Spaghetti","type":"KOCHEN","ingredients":"Spaghetti, Salz, Sauce","foodRecipe":"Wasser kochen, Spaghetti hinzufügen, Kochen bis bissfest, Sauce hinzufügen","imageUrl":"","additionalInformation":""},{"id":2,"name":"Avocado Toast","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":3,"name":"Vito","type":"TAKEOUT","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":4,"name":"Spaghetti Carbonara","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":5,"name":"Avocado Toast","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":6,"name":"Flammenkuchen","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":7,"name":"Pizza","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":8,"name":"Risotto","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":9,"name":"Gmüesplätzli","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":10,"name":"Fishsticks","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":11,"name":"Rice Bowl","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":12,"name":"Signature Dish","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":13,"name":"Gmüesssuppe","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":14,"name":"Pita","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":15,"name":"Tacos","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":16,"name":"Lachs","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":17,"name":"Auflauf","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":18,"name":"Thai curry","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":19,"name":"Indisch","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":20,"name":"Wirz Pasta","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":21,"name":"Sandwitch Toast","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":22,"name":"Käse und Brot","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":23,"name":"Spaghetti mit Soja und Poulet","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":24,"name":"Lauch Härdöpfel","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":25,"name":"Fisch mit Salzhärdöpfel","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":26,"name":"Linse mit Fladebrot","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":27,"name":"Omelette","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":28,"name":"Lemonata","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":29,"name":"Hörnli mit ghacktem","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":30,"name":"Cordon Bleue","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":31,"name":"Lasagne","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":32,"name":"Teigware mit Pesto","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":33,"name":"Teigware mit Bolognese","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":34,"name":"Steak","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":35,"name":"Riis mit Gmüess","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":36,"name":"Gfüllti Peperroni","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":37,"name":"Salade riche","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":38,"name":"Lachsbrötli","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":39,"name":"Gnocci Auflauf","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":40,"name":"Tortellini","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":41,"name":"Wasser und Brot","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":42,"name":"Härdöpfelstock","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":43,"name":"Takeout","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":44,"name":"mir egal, säg du ¯\\_(ツ)_/¯","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":45,"name":"Schinkengipfeli","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":46,"name":"Schawarma","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":47,"name":"Schnitzelbrot","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":48,"name":"Ganzes Poulet","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":49,"name":"Panang Curry","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":50,"name":"Gmüessgipfeli","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":51,"name":"Gnocci mit Spinatsauce","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":52,"name":"Wraps","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":53,"name":"Pide","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":54,"name":"Gmüesswähe","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":55,"name":"Linsensuppe","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":56,"name":"Piccata","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":57,"name":"Lauchgratin","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":58,"name":"Pasta mit Thon-Tomatensauce","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":59,"name":"Chilli con carne","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""},{"id":60,"name":"Shakschukkka","type":"KOCHEN","ingredients":"n/a","foodRecipe":"n/a","imageUrl":"","additionalInformation":""}
-  ] ;
-  private messageSource = new BehaviorSubject(this.demoFoodItems);
+  foodItems : any = [];
+  /* // demoFoodItems : FoodItemModel[] =  ;
+  private messageSource = new BehaviorSubject(this.foodItems);
   currentMessage = this.messageSource.asObservable();
+  */
+
+  private foodServiceApiUrl = "http://localhost:8080/fooditem";
+  private foodServiceLocalDemoUrl = "/assets/fooditem-demo-data.json";
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+   //   Authorization: 'my-auth-token'
+    })
+  };
 
   constructor(
     private http: HttpClient
   ) { }
 
   loadData() : Observable<any>{
-    return this.currentMessage;
-  //TODO   return this.http.get<any>('http://localhost:8080/fooditem');
- /*
-    this.http.get('http://localhost:8080/fooditem')
-    .subscribe(data => console.log(data));
-    */
-    
+     return this.http.get<FoodItemModel>(this.foodServiceApiUrl)
+            .pipe(
+              catchError(this.handleError)
+            );
+  }
+
+  save(foodItem: FoodItemModel): Observable<FoodItemModel>{
+    console.log("service saved item; "+ foodItem.name)
+    if(foodItem.id != null){
+      //update
+      const url = `${this.foodServiceApiUrl}/${foodItem.id}`; 
+      return this.http.put<FoodItemModel>(url , foodItem, this.httpOptions)
+              .pipe(
+                catchError(this.handleError)
+              );
+    }else{
+      //create new
+        return this.http.post<FoodItemModel>(this.foodServiceApiUrl, foodItem, this.httpOptions)
+          .pipe(
+            catchError(this.handleError)
+          );
+    }
+  }
+
+  delete(foodItem: FoodItemModel): Observable<unknown>{
+
+      const url = `${this.foodServiceApiUrl}/${foodItem.id}`; // DELETE api/heroes/42
+      return this.http.delete(url, this.httpOptions)
+              .pipe(
+                catchError(this.handleError)
+              );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
 

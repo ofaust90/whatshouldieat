@@ -1,0 +1,13 @@
+
+    .fa-whatsapp {
+        color: #fff;
+        background: linear-gradient(#25d366,#25d366) 14% 84%/16% 16% no-repeat, radial-gradient(#25d366 60%,transparent 0);
+    }
+
+    a.whts {
+        font-size: 38px;
+        margin: 35px;
+        vertical-align: top;
+        position: relative;
+        top: 2px;
+    }
