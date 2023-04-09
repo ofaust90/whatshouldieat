@@ -10,7 +10,7 @@ import { FooditemService } from '../fooditem.service';
 export class FooditemsoverviewComponent implements OnInit{
  
   foodItems: any = [];  //TODO antipattern
-
+  searchText: string = "";
 
   constructor(
     private fooditemService : FooditemService,

@@ -11,12 +11,12 @@
                 </div>
             </section>
             <form class="d-flex mt-3" role="search">
-                <input class="form-control me-2" type="search" placeholder="Suchen..." aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Suchen</button>
+                <input class="form-control me-2" type="search" placeholder="Suchen..." aria-label="Search" [(ngModel)]="searchText" name="searchText">
             </form> 
             <div class="album py-5 bg-body-tertiary">
                 <div class="container">
-                <app-fooditem *ngFor="let foodItem of foodItems" [foodItem]="foodItem"></app-fooditem>
+                <app-fooditem *ngFor="let foodItem of foodItems | filter: searchText" [foodItem]="foodItem"></app-fooditem>
                 </div>
             </div>
             </main>
+

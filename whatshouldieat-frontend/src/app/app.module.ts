@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditfooditemComponent } from './editfooditem/editfooditem.component';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { EditfooditemComponent } from './editfooditem/editfooditem.component';
     SuggestdetailviewComponent,
     FooditemsoverviewComponent,
     FooditemComponent,
-    EditfooditemComponent
+    EditfooditemComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
