@@ -29,8 +29,8 @@ name: Deploy foodservice to Amazon ECS
 on:
   push:
     branches: [ "master" ]
-    paths:
-      - whatshouldieat-foodservice/**
+  #  paths:
+  #    - whatshouldieat-foodservice/**
 
 env:
   AWS_REGION: eu-central-1                   # set this to your preferred AWS region, e.g. us-west-1
@@ -109,15 +109,18 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
+      working-directory: ./whatshouldieat-frontend 
 
     - name: Lint
       run: npm run lint
+      working-directory: ./whatshouldieat-frontend
 
     #- name: Tests
     #  run: npm run test:prod
 
     - name: Build Angular App
       run: npm run build:prod
+      working-directory: ./whatshouldieat-frontend
 
     - name: Frontend Build, tag, and push image to Amazon ECR
       id: build-image-frontend
