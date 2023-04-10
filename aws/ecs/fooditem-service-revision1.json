@@ -28,7 +28,35 @@
                     "awslogs-stream-prefix": "ecs"
                 }
             }
-        }
+        },
+        {
+            "name": "frontend",
+            "image": "383906986742.dkr.ecr.eu-central-1.amazonaws.com/whatshouldieat/frontend",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "frontend-8081-tcp",
+                    "containerPort": 8081,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/fooditem-service",
+                    "awslogs-region": "eu-central-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }        
     ],
     "family": "fooditem-service",
     "executionRoleArn": "arn:aws:iam::383906986742:role/ecsTaskExecutionRole",
