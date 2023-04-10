@@ -120,7 +120,7 @@ jobs:
     #  run: npm run test:prod
 
     - name: Build Angular App
-      run: npm run build:prod
+      run: npm run build -- --prod
       working-directory: ./whatshouldieat-frontend
 
     - name: Frontend Build, tag, and push image to Amazon ECR
