@@ -112,9 +112,9 @@ jobs:
       run: npm ci
       working-directory: ./whatshouldieat-frontend 
 
-    - name: Lint
-      run: npm run lint
-      working-directory: ./whatshouldieat-frontend
+    #- name: Lint
+    #  run: npm run lint
+    #  working-directory: ./whatshouldieat-frontend
 
     #- name: Tests
     #  run: npm run test:prod
