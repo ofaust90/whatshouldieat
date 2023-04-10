@@ -106,6 +106,7 @@ jobs:
       with:
           node-version: '16'
           cache: 'npm'
+          cache-dependency-path: ./whatshouldieat-frontend/package-lock.json
 
     - name: Install dependencies
       run: npm ci
