@@ -8,5 +8,5 @@ services:
  frontend:
   image: whatshouldieat-frontend
   ports:
-  - 8081:80
+  - 8082:8082
 

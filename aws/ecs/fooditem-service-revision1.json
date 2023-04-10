@@ -35,9 +35,9 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "frontend-8081-tcp",
-                    "containerPort": 8081,
-                    "hostPort": 8081,
+                    "name": "frontend-8082-tcp",
+                    "containerPort": 8082,
+                    "hostPort": 8082,
                     "protocol": "tcp",
                     "appProtocol": "http"
                 }
