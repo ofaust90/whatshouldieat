@@ -1,3 +1,3 @@
-FROM nginx:stable-alpine3.17
+FROM nginx:latest
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY /dist/whatshouldieat-frontend /usr/share/nginx/html
