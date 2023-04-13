@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fooditemservice-deploy
+  labels:
+    name: fooditemservice-deploy
+    app: whatshouldieat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: fooditemservice-pod
+      app: whatshouldieat
+  template:
+    metadata:
+      name: fooditemservice-pod
+      labels:
+        name: fooditemservice-pod
+        app: whatshouldieat
+    spec:
+      containers:
+      - name: fooditemservice
+        image: 383906986742.dkr.ecr.eu-central-1.amazonaws.com/whatshouldieat:TODO
+        ports:
+        - containerPort: 8081
+
+
+
+
+   

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fooditemservice-service
+  labels:
+    name: fooditemservice-service
+    app: whatshouldieat
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8081
+      targetPort: 8081
+  selector:
+   name: fooditemservice-pod
+   app: whatshouldieat

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deploy
+  labels:
+    name: frontend-deploy
+    app: whatshouldieat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: frontend-pod
+      app: whatshouldieat
+  template:
+    metadata:
+      name: frontend-pod
+      labels:
+        name: frontend-pod
+        app: whatshouldieat
+    spec:
+      containers:
+      - name: frontend
+        image: 383906986742.dkr.ecr.eu-central-1.amazonaws.com/whatshouldieat:frontend-2e935591e6c1f44aa4e514d38ac9809f2c524806
+        ports:
+        - containerPort: 80
+
+
+
+
+   
+    

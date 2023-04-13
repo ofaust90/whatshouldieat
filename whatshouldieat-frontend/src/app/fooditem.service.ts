@@ -14,7 +14,7 @@ export class FooditemService {
   currentMessage = this.messageSource.asObservable();
   */
 
-  private foodServiceApiUrl = "http://localhost:8080/fooditem";
+  private foodServiceApiUrl = "http://fooditemservice-service:8081/fooditem";
   private foodServiceLocalDemoUrl = "/assets/fooditem-demo-data.json";
   httpOptions = {
     headers: new HttpHeaders({
