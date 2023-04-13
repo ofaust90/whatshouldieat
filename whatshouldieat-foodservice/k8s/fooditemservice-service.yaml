@@ -6,7 +6,6 @@ metadata:
     name: fooditemservice-service
     app: whatshouldieat
 spec:
-  type: ClusterIP
   ports:
     - port: 8080
       targetPort: 8080
