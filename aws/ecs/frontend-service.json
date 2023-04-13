@@ -1,15 +1,15 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:eu-central-1:383906986742:task-definition/fooditem-service:1",
+    "taskDefinitionArn": "arn:aws:ecs:eu-central-1:383906986742:task-definition/frontend-service:1",
     "containerDefinitions": [
         {
-            "name": "fooditem",
-            "image": "383906986742.dkr.ecr.eu-central-1.amazonaws.com/whatshouldieat/fooditem-service",
+            "name": "frontend",
+            "image": "383906986742.dkr.ecr.eu-central-1.amazonaws.com/whatshouldieat/frontend",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "fooditem-8080-tcp",
-                    "containerPort": 8080,
-                    "hostPort": 8080,
+                    "name": "frontend-8082-tcp",
+                    "containerPort": 8082,
+                    "hostPort": 8082,
                     "protocol": "tcp",
                     "appProtocol": "http"
                 }
@@ -23,12 +23,12 @@
                 "logDriver": "awslogs",
                 "options": {
                     "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/fooditem-service",
+                    "awslogs-group": "/ecs/frontend-service",
                     "awslogs-region": "eu-central-1",
                     "awslogs-stream-prefix": "ecs"
                 }
             }
-        }      
+        }        
     ],
     "family": "fooditem-service",
     "executionRoleArn": "arn:aws:iam::383906986742:role/ecsTaskExecutionRole",

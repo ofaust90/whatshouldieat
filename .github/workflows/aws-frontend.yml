@@ -24,22 +24,21 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-name: Deploy foodservice to Amazon ECS
+name: Deploy frontend to Amazon ECS
 
 on:
   push:
     branches: [ "master" ]
     paths:
-      - whatshouldieat-foodservice/**
+      - whatshouldieat-frontend/**
 
 env:
   AWS_REGION: eu-central-1                   # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: whatshouldieat           # set this to your Amazon ECR repository name
   ECS_SERVICE: fooditem-service                 # set this to your Amazon ECS service name
   ECS_CLUSTER: devcluster                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: aws/ecs/fooditem-service-revision1.json # set this to the path to your Amazon ECS task definition
+  ECS_TASK_DEFINITION: aws/ecs/frontend-service.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: fooditem           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
   CONTAINER_NAME_FRONTEND: frontend
 
@@ -66,20 +65,32 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1        
-
-    # backend java services
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-    
-    - name: Build with Maven
-      run: mvn --batch-mode --update-snapshots package
-      working-directory: ./whatshouldieat-foodservice
       
-    - name: Backend Build, tag, and push image to Amazon ECR
-      id: build-image-backend
+    #frontend angular project
+    - name: Set up node.js
+      uses: actions/setup-node@v3.3.0
+      with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: ./whatshouldieat-frontend/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+      working-directory: ./whatshouldieat-frontend 
+
+    #- name: Lint
+    #  run: npm run lint
+    #  working-directory: ./whatshouldieat-frontend
+
+    #- name: Tests
+    #  run: npm run test:prod
+
+    - name: Build Angular App
+      run: npm run build
+      working-directory: ./whatshouldieat-frontend
+
+    - name: Frontend Build, tag, and push image to Amazon ECR
+      id: build-image-frontend
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
@@ -90,20 +101,20 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-      working-directory: ./whatshouldieat-foodservice
-      
-    - name: Backend Fill in the new image ID in the Amazon ECS task definition
-      id: task-def-backend
+      working-directory: ./whatshouldieat-frontend
+  
+    - name: Frontend Fill in the new image ID in the Amazon ECS task definition
+      id: task-def-frontend
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
-        container-name: ${{ env.CONTAINER_NAME }}
-        image: ${{ steps.build-image-backend.outputs.image }}
+        container-name: ${{ env.CONTAINER_NAME_FRONTEND }}
+        image: ${{ steps.build-image-frontend.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ${{ steps.task-def-backend.outputs.task-definition }}
+        task-definition: ${{ steps.task-def-frontend.outputs.task-definition }}
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
