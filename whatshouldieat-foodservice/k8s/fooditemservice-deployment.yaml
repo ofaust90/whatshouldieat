@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: fooditemservice
-        image: 383906986742.dkr.ecr.eu-central-1.amazonaws.com/whatshouldieat:a68595163f1e83b6acb7df46549716829a73f0e6 
+        image: 383906986742.dkr.ecr.eu-central-1.amazonaws.com/whatshouldieat:59173f561a79ffc4afc1bde5e7ea45b34628e721
         ports:
         - containerPort: 8080
 
