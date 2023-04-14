@@ -21,20 +21,20 @@ import ch.oliverfaust.whatshouldieatfoodservice.service.FoodItemService;
 public class FoodItemController {
     
     private final FoodItemService service;
-    private final String CORS_IP_ALLOW = "http://ac04efe572a774d43ae8144e0b735fc5-2046315918.eu-central-1.elb.amazonaws.com:80";
+  //  private final String CORS_IP_ALLOW = "http://ac04efe572a774d43ae8144e0b735fc5-2046315918.eu-central-1.elb.amazonaws.com:80";
 
     @Autowired
     public FoodItemController(FoodItemService foodItemService){
         this.service = foodItemService;
     }
 
-    @CrossOrigin(origins = CORS_IP_ALLOW)
+    @CrossOrigin
     @GetMapping("/fooditem")
     public List<FoodItem> returnFoodItems(){
         return service.getAllFoodItems();
     }
 
-    @CrossOrigin(origins = CORS_IP_ALLOW)
+    @CrossOrigin
     @GetMapping("/fooditem/{id}")
     public FoodItem returnFoodItemById(@PathVariable("id") Integer id){
          Optional<FoodItem> opt = service.findFoodItemById(id);
@@ -45,19 +45,19 @@ public class FoodItemController {
          return null;    
     }
 
-    @CrossOrigin(origins = CORS_IP_ALLOW)
+    @CrossOrigin
     @PostMapping("/fooditem")
     public FoodItem addFoodItem(@RequestBody FoodItem newFoodItem) {
         return service.saveFoodItem(newFoodItem);
     }
 
-    @CrossOrigin(origins = CORS_IP_ALLOW)
+    @CrossOrigin
     @PutMapping("/fooditem/{id}")
     public FoodItem updatFoodItem(@RequestBody FoodItem updateFoodItem, @PathVariable Integer id){
         return service.updateFoodItem(id, updateFoodItem);
     }
 
-    @CrossOrigin(origins = CORS_IP_ALLOW)
+    @CrossOrigin
     @DeleteMapping("/fooditem/{id}")
     public void deleteFoodItem(@PathVariable Integer id){
         service.deleteFoodItem(id);
