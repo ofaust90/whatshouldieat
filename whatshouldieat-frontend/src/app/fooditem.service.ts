@@ -13,8 +13,8 @@ export class FooditemService {
   private messageSource = new BehaviorSubject(this.foodItems);
   currentMessage = this.messageSource.asObservable();
   */
-                            
-  private foodServiceApiUrl = "http://fooditemservice-service:8080/fooditem";
+
+  private foodServiceApiUrl = "http://a7431d5059fd546d0996beadebb96a07-704702806.eu-central-1.elb.amazonaws.com:8080/fooditem";
   private foodServiceLocalDemoUrl = "/assets/fooditem-demo-data.json";
   httpOptions = {
     headers: new HttpHeaders({
