@@ -92,16 +92,21 @@ jobs:
       working-directory: ./whatshouldieat-foodservice
           
     - name: deploy to cluster
-      uses: steebchen/kubectl@v2.0.0
-      with: # defaults to latest kubectl binary version
-        config: ${{ secrets.KUBE_CONFIG_DATA }}
-        command: set image --record deployment/fooditemservice-deploy container=${{ steps.build-image-backend.outputs.image }}
-
-    - name: verify deployment
-      uses: steebchen/kubectl@v2.0.0
+      uses: kodermax/kubectl-aws-eks@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: fooditem
+        IMAGE_TAG: ${{ github.sha }}
       with:
-        config: ${{ secrets.KUBE_CONFIG_DATA }}
-        command: rollout status deployment/my-app      
+        args: set image deployment/fooditemservice-deploy fooditemservice=${{ steps.build-image-backend.outputs.image }}
+        
+    - name: verify deployment
+      uses: kodermax/kubectl-aws-eks@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: rollout status deployment/fooditemservice-deploy
       
 #    - name: Backend Fill in the new image ID in the Amazon ECS task definition
 #      id: task-def-backend
