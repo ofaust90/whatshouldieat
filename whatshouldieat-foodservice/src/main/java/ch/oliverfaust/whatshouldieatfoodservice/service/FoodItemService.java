@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,16 +13,23 @@ import ch.oliverfaust.whatshouldieatfoodservice.model.FoodItem;
 import ch.oliverfaust.whatshouldieatfoodservice.model.FoodType;
 
 
-@Service @Transactional
+@Service
+@Transactional
 public class FoodItemService {
 
+   
     private final FoodItemRepository repository;
     private List<FoodItem> fullFoodItemsList;
+
+    private SequenceGeneratorService sequenceGeneratorService;
     
    @Autowired
-   public FoodItemService(FoodItemRepository foodItemRepository){
+   public FoodItemService(FoodItemRepository foodItemRepository, SequenceGeneratorService sequenceGenerator){
        this.repository = foodItemRepository;
+       this.sequenceGeneratorService = sequenceGenerator;
        initalizeDatabaseWithDemoValues();
+     /*  repository.save(
+        new FoodItem("Spaghetti", FoodType.KOCHEN));*/
    } 
 
     public Optional<FoodItem> findFoodItemById(Integer id){
@@ -40,8 +48,9 @@ public class FoodItemService {
     }
 
     public FoodItem updateFoodItem(Integer id, FoodItem newFoodItem){
-        return repository.findById(id)
-        .map(foodItem -> {
+        return repository.save(newFoodItem);
+       /*   return repository.findById(id);
+      .map(foodItem -> {
             foodItem.setName(newFoodItem.getName());
             foodItem.setFoodRecipe(newFoodItem.getFoodRecipe());
             foodItem.setIngredients(newFoodItem.getIngredients());
@@ -52,7 +61,7 @@ public class FoodItemService {
         .orElseGet(() -> {
               newFoodItem.setId(id);
           return repository.save(newFoodItem);
-        });
+        });*/
     }
 
     public void deleteFoodItem(Integer id){

@@ -21,7 +21,6 @@ import ch.oliverfaust.whatshouldieatfoodservice.service.FoodItemService;
 public class FoodItemController {
     
     private final FoodItemService service;
-  //  private final String CORS_IP_ALLOW = "http://ac04efe572a774d43ae8144e0b735fc5-2046315918.eu-central-1.elb.amazonaws.com:80";
 
     @Autowired
     public FoodItemController(FoodItemService foodItemService){
