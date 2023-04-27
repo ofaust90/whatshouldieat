@@ -98,7 +98,6 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: fooditem
         IMAGE_TAG: ${{ github.sha }}
-        KUBECTL_VERSION: "v1.22.0"
       with:
         args: set image deployment/fooditemservice-deploy fooditemservice=${{ steps.build-image-backend.outputs.image }}
         
@@ -106,7 +105,6 @@ jobs:
       uses: kodermax/kubectl-aws-eks@master
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        KUBECTL_VERSION: "v1.22.0" 
       with:
         args: rollout status deployment/fooditemservice-deploy
       
