@@ -21,6 +21,10 @@ public class FoodItem {
 
     @Getter
     @Setter
+    private String owner = "";
+
+    @Getter
+    @Setter
     private FoodType type;
 
     @Getter
@@ -43,6 +47,12 @@ public class FoodItem {
 
     public FoodItem(String name, FoodType type){
         this.name = name;
+        this.type = type;
+    }
+
+    public FoodItem(String name, String owner, FoodType type){
+        this.name = name;
+        this.owner = owner;
         this.type = type;
     }
 

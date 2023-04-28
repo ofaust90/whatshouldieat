@@ -28,6 +28,10 @@ public class FoodItemService {
         return repository.findById(id);
     }
 
+    public Optional<FoodItem> findFoodItemByUser(String user){
+        return repository.findByOwner(user);
+    }
+
     public FoodItem saveFoodItem(FoodItem foodItem){
         return repository.save(foodItem);
     }

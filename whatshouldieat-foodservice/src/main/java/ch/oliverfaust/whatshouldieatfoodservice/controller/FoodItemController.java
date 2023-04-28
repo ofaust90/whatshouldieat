@@ -17,6 +17,7 @@ import ch.oliverfaust.whatshouldieatfoodservice.model.FoodItem;
 import ch.oliverfaust.whatshouldieatfoodservice.model.FoodType;
 import ch.oliverfaust.whatshouldieatfoodservice.service.FoodItemService;
 
+@CrossOrigin
 @RestController
 public class FoodItemController {
     
@@ -67,5 +68,46 @@ public class FoodItemController {
     public FoodItem test(){
         return new FoodItem("Test", FoodType.KOCHEN); 
     }
+
+    @GetMapping("/user/{user}")
+    public FoodItem returnFoodItemUser(@PathVariable("user") String user){
+         Optional<FoodItem> opt = service.findFoodItemByUser(user);
+         if(!opt.isEmpty()){
+             System.out.println(opt.get());
+           return (FoodItem)opt.get();
+         }
+         return null;    
+    }
+
+    @GetMapping("/user/{user}/{id}")
+    public FoodItem returnFoodItemForUserById(@PathVariable("user") Integer user, @PathVariable("id") Integer id){
+         Optional<FoodItem> opt = service.findFoodItemById(id);
+         if(!opt.isEmpty()){
+             System.out.println(opt.get());
+           return (FoodItem)opt.get();
+         }
+         return null;    
+    }
+
+    @CrossOrigin
+    @PostMapping("/user/{user}")
+    public FoodItem addFoodItemForUser(@RequestBody FoodItem newFoodItem, @PathVariable("user") String user ) {
+        newFoodItem.setOwner(user);
+        return service.saveFoodItem(newFoodItem);
+    }
+
+    @CrossOrigin
+    @PutMapping("/user/{user}/{id}")
+    public FoodItem updateFoodItemForUser(@RequestBody FoodItem updateFoodItem, @PathVariable Integer id, @PathVariable("user") String user){
+        updateFoodItem.setOwner(user);
+        return service.updateFoodItem(id, updateFoodItem);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/user/{user}/{id}")
+    public void deleteFoodItemForUser(@PathVariable Integer id){
+        service.deleteFoodItem(id);
+    }
+
 
 }
